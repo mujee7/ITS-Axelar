@@ -10,14 +10,21 @@ const {
 
 const interchainTokenServiceContractABI = require("./abis/interchainTokenServiceABI");
 const customTokenABI = require("./abis/customTokenABI");
+const tokenDeployerABI = require("./abis/tokenDeployer")
+const {tokenByteCode} = require("./byteCode/tokenByteCode");
+const simpleTokenArtifacts = require("./artifacts/contracts/simple.sol/SimpleCustomToken.json")
 
 const MINT_BURN = 4;
 
 const interchainTokenServiceContractAddress =
   "0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C";
 
-const fantomCustomTokenAddress = "0x6Ee1Fa1A82D49D35594B41E29A93D1345893169C"; // Replace with your token address on fantom
-const polygonCustomTokenAddress = "0x6Ee1Fa1A82D49D35594B41E29A93D1345893169C"; // Replace with your token address on Polygon
+const tokenDeployerAddress =
+  "0x98B2920D53612483F91F12Ed7754E51b4A77919e";
+
+const tokenAddress = "0x6Ee1Fa1A82D49D35594B41E29A93D1345893169C"; // Replace with your token address on fantom
+
+let salt = '0x37ddaac998df1036e69e21711cd7464d073f41c26e4b6bf354886abeb5f9c834'; //update the salt value
 
 async function getSigner() {
     const [signer] = await ethers.getSigners();
@@ -27,9 +34,30 @@ async function getSigner() {
   async function getContractInstance(contractAddress, contractABI, signer) {
     return new ethers.Contract(contractAddress, contractABI, signer);
   }
+function getSalt(){
+  const salt = "0x" + crypto.randomBytes(32).toString("hex");
+
+  console.log(salt)
+}
 
 
 //...
+
+async function deploysToken() {
+  // Get a signer to sign the transaction
+  const signer = await getSigner();  
+
+  const deployerContract = await getContractInstance(
+    tokenDeployerAddress,
+    tokenDeployerABI,
+    signer
+  );
+  
+  console.log("Token Address before deployment: ",await deployerContract.deployedAddress(tokenByteCode, signer.address, salt));
+  
+  const tx= await deployerContract.deploy(tokenByteCode,salt)
+  console.log("Transaction Hash: ",tx.hash)
+}
 
 // Deploy token manager : Fantom
 async function deployTokenManager() {
@@ -44,14 +72,12 @@ async function deployTokenManager() {
   );
 
   // Generate a random salt
-  const salt = "0x" + crypto.randomBytes(32).toString("hex");
-
-  console.log(salt)
+  
 
   // Create params
   const params = ethers.utils.defaultAbiCoder.encode(
     ["bytes", "address"],
-    [signer.address, fantomCustomTokenAddress]
+    [signer.address, tokenAddress]
   );
 
   // Deploy the token manager
@@ -121,6 +147,8 @@ async function deployRemoteTokenManager() {
   // Get a signer to sign the transaction
   const signer = await getSigner();
 
+  const remoteChain = "base-sepolia" // remote chain update on each call
+
   // Get the InterchainTokenService contract instance
   const interchainTokenServiceContract = await getContractInstance(
     interchainTokenServiceContractAddress,
@@ -131,15 +159,15 @@ async function deployRemoteTokenManager() {
   // Create params
   const param = ethers.utils.defaultAbiCoder.encode(
     ["bytes", "address"],
-    [signer.address, polygonCustomTokenAddress]
+    [signer.address, tokenAddress]
   );
 
   const gasAmount = await gasEstimator();
 
   // Deploy the token manager
   const deployTxData = await interchainTokenServiceContract.deployTokenManager(
-    "0x43f4f3e7556885ebab379406bda0815dfedd74fc701ee79f84e17b87ec11d143", // change salt
-    "base-sepolia",
+    salt, 
+    remoteChain,
     MINT_BURN,
     param,
     ethers.utils.parseEther("0.01"),
@@ -149,7 +177,7 @@ async function deployRemoteTokenManager() {
   // Get the tokenId
   const tokenId = await interchainTokenServiceContract.interchainTokenId(
     signer.address,
-    "0x43f4f3e7556885ebab379406bda0815dfedd74fc701ee79f84e17b87ec11d143" // change salt
+    salt 
   );
 
   // Get the token manager address
@@ -171,12 +199,14 @@ async function deployRemoteTokenManager() {
 //...
 
 // Transfer mint access on all chains to the Expected Token Manager : Fantom
-async function transferMintAccessToTokenManagerOnFantom() {
+async function transferMintAccessToTokenManager() {
   // Get a signer to sign the transaction
   const signer = await getSigner();
 
+  const tokenManagerAddress = "0x4d07F310d82f1057C013612607B6E21F0C6ac945" //change token manager address to your manager
+
   const tokenContract = await getContractInstance(
-    fantomCustomTokenAddress,
+    tokenAddress,
     customTokenABI,
     signer
   );
@@ -188,41 +218,11 @@ async function transferMintAccessToTokenManagerOnFantom() {
 
   const grantRoleTxn = await tokenContract.grantRole(
     getMinterRole,
-    "0x4d07F310d82f1057C013612607B6E21F0C6ac945" //change token manager address to your manager
+    tokenManagerAddress 
   );
 
   console.log("grantRoleTxn: ", grantRoleTxn.hash);
 }
-
-
-
-
-//...
-
-// Transfer mint access on all chains to the Expected Token Manager Address : Polygon
-async function transferMintAccessToTokenManagerOnPolygon() {
-  // Get a signer to sign the transaction
-  const signer = await getSigner();
-
-  const tokenContract = await getContractInstance(
-    polygonCustomTokenAddress,
-    customTokenABI,
-    signer
-  );
-
-  // Get the minter role
-  const getMinterRole = await tokenContract.MINTER_ROLE();
-
-  const grantRoleTxn = await tokenContract.grantRole(
-    getMinterRole,
-    "0x4d07F310d82f1057C013612607B6E21F0C6ac945"
-  );
-
-  console.log("grantRoleTxn: ", grantRoleTxn.hash);
-}
-
-//...
-
 
 
 
@@ -233,6 +233,10 @@ async function transferTokens() {
   // Get a signer to sign the transaction
   const signer = await getSigner();
 
+  const tokenID = "0x76f2fc6fadac5f3b0feae7cf75832bb319a39a5d01f99f65090f00df6f95a028" // tokenId, the one you store in the earlier step
+
+  const remoteChain = "base-sepolia" // remote chain update on each call
+
   const interchainTokenServiceContract = await getContractInstance(
     interchainTokenServiceContractAddress,
     interchainTokenServiceContractABI,
@@ -240,9 +244,9 @@ async function transferTokens() {
   );
   const gasAmount = await gasEstimator();
   const transfer = await interchainTokenServiceContract.interchainTransfer(
-    "0x76f2fc6fadac5f3b0feae7cf75832bb319a39a5d01f99f65090f00df6f95a028", // tokenId, the one you store in the earlier step
-    "base-sepolia", //chain identifier
-    "0x0981AD88A960B03CAA47Db6ab2932dA114F85842", // receiver address
+    tokenID, 
+    remoteChain, 
+    signer.address,  //receiver address
     ethers.utils.parseEther("500"), // amount of token to transfer
     "0x",
     ethers.utils.parseEther("0.01"), // gasValue
@@ -272,17 +276,20 @@ async function transferTokens() {
 async function main() {
   const functionName = process.env.FUNCTION_NAME;
   switch (functionName) {
+    case "getSalt":
+      getSalt();
+      break;
+    case "deploysToken":
+      await deploysToken();
+      break;
     case "deployTokenManager":
       await deployTokenManager();
       break;
     case "deployRemoteTokenManager":
       await deployRemoteTokenManager();
       break;
-    case "transferMintAccessToTokenManagerOnFantom":
-      await transferMintAccessToTokenManagerOnFantom();
-      break;
-    case "transferMintAccessToTokenManagerOnPolygon":
-      await transferMintAccessToTokenManagerOnPolygon();
+    case "transferMintAccessToTokenManager":
+      await transferMintAccessToTokenManager();
       break;
     case "transferTokens":
       await transferTokens();
