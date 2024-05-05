@@ -66,9 +66,9 @@ But before this you have to get smart contract and paste it in remix https://rem
 
 
 Then paste in in the tokenByteCode.js file in byteCode folder. Now change the function name in env and run the following command.
-
+```
 npx hardhat run customInterchainToken.js --network yourNetwork
-
+```
 here yourNetwork should be the name of the network you want to deploy on and it should be added in the config file. If it is not there add your network the same way as those two are there ethereum and base. Here both are testnet links. So it deploys on testnets at the moment.
 
 If you have to deploy on 15 different evm chains. You have to add those 15 chains data in config file. and run the same command 15 times with each time with a different network.
@@ -87,9 +87,9 @@ This will deploy token Manager on the specified blockchain.
 
 Before calling this function change tokenAddress value in customInterchainToken.js file with your token address.
 
-
+```
 npx hardhat run customInterchainToken.js --network ethereum
-
+```
 
 ### 2. `deployRemoteTokenManager`
 
@@ -98,9 +98,9 @@ Deploys a token manager remotely on another chain. It calculates gas fees, encod
 Before calling this function you need to change the remoteChain value inside this function deployRemoteTokenManager. You can get you desired chain value from this link https://docs.axelar.dev/dev/reference/testnet-chain-names (CHAIN IDENTIFIER	value)
 
 For this command you dont have to change the chain name but it should have the same chain name on which you have money on. Like you can now deploy token manager from ethereum blockchain on any chain by paying gas in ethereum.
-
+```
 npx hardhat run customInterchainToken.js --network ethereum
-
+```
 Now you have to repeat this step for all your blockchains
 
 Dont Forget to copy and save the token ID for future use.
@@ -113,9 +113,9 @@ Transfers mint access to the token manager on the chain. Grants the minter role 
 Before calling you have to change the tokenManagerAddress with your token manager address inside this function transferMintAccessToTokenManager
 
 Now you have to run this command with all the blockchains you deployed token on
-
+```
 npx hardhat run customInterchainToken.js --network yourChainName
-
+```
 
 ### 5. `transferTokens`
 
@@ -124,8 +124,9 @@ Transfers tokens from one chain to another. Initiates a token transfer between c
 Before this change the tokenID and remoteChain values in the function transferTokens. tokenID will be the one you stored in the previous steps and remoteChain will be the chain to you want to receive tokens.
 
 here yourChainName will be the from chain where tokens need to be sent.
+```
 npx hardhat run customInterchainToken.js --network yourChainName
-
+```
 
 
 ## Documentation
