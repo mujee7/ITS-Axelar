@@ -80,7 +80,7 @@ Now The tokens is deployed on different chains with same address. We can move fu
 
 
 
-### 1. `deployTokenManager`
+### 3. `deployTokenManager`
 
 This function deploys a token manager on the specified chain. It  encodes parameters, and deploys the token manager contract.
 This will deploy token Manager on the specified blockchain.
@@ -91,7 +91,7 @@ Before calling this function change tokenAddress value in customInterchainToken.
 npx hardhat run customInterchainToken.js --network ethereum
 ```
 
-### 2. `deployRemoteTokenManager`
+### 4. `deployRemoteTokenManager`
 
 Deploys a token manager remotely on another chain. It calculates gas fees, encodes parameters, and deploys the token manager contract on the target chain.
 
@@ -106,7 +106,7 @@ Now you have to repeat this step for all your blockchains
 Dont Forget to copy and save the token ID for future use.
 
 
-### 3. `transferMintAccessToTokenManager`
+### 5. `transferMintAccessToTokenManager`
 
 Transfers mint access to the token manager on the chain. Grants the minter role to the specified token manager address.
 
@@ -117,7 +117,7 @@ Now you have to run this command with all the blockchains you deployed token on
 npx hardhat run customInterchainToken.js --network yourChainName
 ```
 
-### 5. `transferTokens`
+### 6. `transferTokens`
 
 Transfers tokens from one chain to another. Initiates a token transfer between chains using the interchain token service contract.
 
