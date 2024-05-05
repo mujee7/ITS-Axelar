@@ -62,7 +62,7 @@ This salt value is very important for all the functions ahead so copy it properl
 This funtion will be used to deploy your smart contract on the same address on different blockchains.
 But before this you have to get smart contract and paste it in remix https://remix.ethereum.org/ and compile it and add the constructor arguments in the boxes shown and copy the byte code by clickcing Calldata button. 
 
-![alt text](https://github.com/mujee7/ITS-Axelar/tree/main/images/image.png?raw=true)
+![alt text](https://github.com/mujee7/ITS-Axelar/blob/main/images/image.PNG)
 
 
 Then paste in in the tokenByteCode.js file in byteCode folder. Now change the function name in env and run the following command.
