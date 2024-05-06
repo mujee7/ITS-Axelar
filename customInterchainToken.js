@@ -1,6 +1,7 @@
 const hre = require("hardhat");
 const crypto = require("crypto");
 const ethers = hre.ethers;
+const fs = require('fs');
 const {
   AxelarQueryAPI,
   Environment,
@@ -11,8 +12,7 @@ const {
 const interchainTokenServiceContractABI = require("./abis/interchainTokenServiceABI");
 const customTokenABI = require("./abis/customTokenABI");
 const tokenDeployerABI = require("./abis/tokenDeployer")
-const {tokenByteCode} = require("./byteCode/tokenByteCode");
-const simpleTokenArtifacts = require("./artifacts/contracts/simple.sol/SimpleCustomToken.json")
+const tokenByteCode = fs.readFileSync("./output/simple_sol_SimpleCustomToken.bin");
 
 const MINT_BURN = 4;
 
@@ -24,7 +24,7 @@ const tokenDeployerAddress =
 
 const tokenAddress = "0x6Ee1Fa1A82D49D35594B41E29A93D1345893169C"; // Replace with your token address on fantom
 
-let salt = '0x37ddaac998df1036e69e21711cd7464d073f41c26e4b6bf354886abeb5f9c834'; //update the salt value
+let salt = '0xda3deead44e19a8954789a523314acaaa423bfe67798112e65b96378ee4b2bd8'; //update the salt value
 
 async function getSigner() {
     const [signer] = await ethers.getSigners();
@@ -47,15 +47,28 @@ async function deploysToken() {
   // Get a signer to sign the transaction
   const signer = await getSigner();  
 
+  // Example constructor arguments
+  // change these address values
+  const constructorArgs = ["0x277491d370d1C3014C1473420d74f2a9C5E6c345", "0x277491d370d1C3014C1473420d74f2a9C5E6c345"];
+
+  // Encode constructor arguments
+  const encodedArgs = ethers.utils.defaultAbiCoder.encode(
+    ["address", "address"], //change these accroding to your contract
+    constructorArgs
+  );
+  console.log("arguments: ", encodedArgs)
+
   const deployerContract = await getContractInstance(
     tokenDeployerAddress,
     tokenDeployerABI,
     signer
   );
-  
-  console.log("Token Address before deployment: ",await deployerContract.deployedAddress(tokenByteCode, signer.address, salt));
-  
-  const tx= await deployerContract.deploy(tokenByteCode,salt)
+
+  const some = "0x" + tokenByteCode.toString() + encodedArgs.slice(2); 
+
+  console.log("Token Address before deployment: ",await deployerContract.deployedAddress(some, signer.address, salt));
+
+  tx= await deployerContract.deploy(some,salt)
   console.log("Transaction Hash: ",tx.hash)
 }
 

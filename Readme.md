@@ -52,20 +52,34 @@ npx hardhat run customInterchainToken.js --network ethereum
 
 On every step you have to change FUNCTION_NAME in .env file before running the command.
 
+First of all run this command in cmd. Remember in cmd new terminal.
+
+```
+
+solcjs --base-path ./contracts --bin ./contracts/simple.sol -o ./output
+
+```
+This command will compile the code and create bytecode of the smart contract
+
+
 ### 1. `getSalt`
 
 This function will create a random salt for the deployments ahead. You need to copy this value and change it in the customInterchainToken.js file variable "salt".
+
 This salt value is very important for all the functions ahead so copy it properly and also save it somewhere secure and easy to remember.
+
 
 ### 2. `deploysToken`
 
 This funtion will be used to deploy your smart contract on the same address on different blockchains.
-But before this you have to get smart contract and paste it in remix https://remix.ethereum.org/ and compile it and add the constructor arguments in the boxes shown and copy the byte code by clickcing Calldata button. 
 
-![alt text](https://github.com/mujee7/ITS-Axelar/blob/main/images/image.PNG)
+Before running this command you need to change the constructorArgs array values in deploysToken function in customInterchainToken.js file.
+If you are using the already there contract only chnage constructorArgs values with your own wallet address whose private key you have added in .env
 
+For custom token you have to change it accordingly.
 
-Then paste in in the tokenByteCode.js file in byteCode folder. Now change the function name in env and run the following command.
+now run the command 
+
 ```
 npx hardhat run customInterchainToken.js --network yourNetwork
 ```
@@ -77,6 +91,8 @@ Requirement:
 You need to have enough coin to pay for gas of token deployment.
 
 Now The tokens is deployed on different chains with same address. We can move further.
+
+copy the token address from terminal for next step.
 
 
 

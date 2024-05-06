@@ -1,94 +1,12 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\simple.sol": {
-      "lastModificationDate": 1714923129784,
-      "contentHash": "9de9db0567f709c47c5d3f7a0171c69a",
-      "sourceName": "contracts/simple.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\AccessControl.sol": {
+      "lastModificationDate": 1715007985604,
+      "contentHash": "348583ad0cc86f289bd3c7cf37ae5e8d",
+      "sourceName": "contracts/AccessControl.sol",
       "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
-        "@openzeppelin/contracts/access/AccessControl.sol",
-        "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "SimpleCustomToken"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
-      "lastModificationDate": 1714822108779,
-      "contentHash": "c6375ef25e84c90b3d15f9ec4eef218f",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./extensions/IERC20Metadata.sol",
-        "../../utils/Context.sol",
-        "../../interfaces/draft-IERC6093.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\access\\AccessControl.sol": {
-      "lastModificationDate": 1714822108563,
-      "contentHash": "4c80b7fdf559a9a348e832a57d072a0b",
-      "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
-      "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -113,8 +31,8 @@
       },
       "imports": [
         "./IAccessControl.sol",
-        "../utils/Context.sol",
-        "../utils/introspection/ERC165.sol"
+        "./Context.sol",
+        "./ERC165.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
@@ -123,12 +41,12 @@
         "AccessControl"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\ERC20Burnable.sol": {
-      "lastModificationDate": 1714822108784,
-      "contentHash": "273d8d24b06f67207dd5f35c3a0c1086",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IAccessControl.sol": {
+      "lastModificationDate": 1715007985622,
+      "contentHash": "e3a14b0714caaaa82d58fa0bc3756079",
+      "sourceName": "contracts/IAccessControl.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -151,65 +69,20 @@
           }
         }
       },
-      "imports": [
-        "../ERC20.sol",
-        "../../../utils/Context.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "ERC20Burnable"
+        "IAccessControl"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\ERC20Permit.sol": {
-      "lastModificationDate": 1714822108798,
-      "contentHash": "d3f7511a1805398723f36799db2af4e1",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20Permit.sol",
-        "../ERC20.sol",
-        "../../../utils/cryptography/ECDSA.sol",
-        "../../../utils/cryptography/EIP712.sol",
-        "../../../utils/Nonces.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC20Permit"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1714822108681,
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\Context.sol": {
+      "lastModificationDate": 1715007985606,
       "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
-      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "sourceName": "contracts/Context.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -240,124 +113,12 @@
         "Context"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\interfaces\\draft-IERC6093.sol": {
-      "lastModificationDate": 1714822108700,
-      "contentHash": "4aefc698f77ecbace7f401257dfe182d",
-      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC1155Errors",
-        "IERC20Errors",
-        "IERC721Errors"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
-      "lastModificationDate": 1714822109007,
-      "contentHash": "5517c8678c18eb1a8ba58810e7ca39ca",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
-      "lastModificationDate": 1714822109013,
-      "contentHash": "4c02fa6f7ae7b6c289cef80424f0c875",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC20Metadata"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\ERC165.sol": {
-      "lastModificationDate": 1714822108758,
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ERC165.sol": {
+      "lastModificationDate": 1715007985615,
       "contentHash": "6a55c353946e471d9792965d06208295",
-      "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
+      "sourceName": "contracts/ERC165.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -390,48 +151,12 @@
         "ERC165"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\access\\IAccessControl.sol": {
-      "lastModificationDate": 1714822108919,
-      "contentHash": "e3a14b0714caaaa82d58fa0bc3756079",
-      "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IAccessControl"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\introspection\\IERC165.sol": {
-      "lastModificationDate": 1714822108988,
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IERC165.sol": {
+      "lastModificationDate": 1715007985624,
       "contentHash": "de0163561b417b800d01749cbbe2147e",
-      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "sourceName": "contracts/IERC165.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -462,84 +187,12 @@
         "IERC165"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\Nonces.sol": {
-      "lastModificationDate": 1714822109395,
-      "contentHash": "c32d108058718efb9061b88e83a83f79",
-      "sourceName": "@openzeppelin/contracts/utils/Nonces.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\simple.sol": {
+      "lastModificationDate": 1715007985641,
+      "contentHash": "29cedf5bab2e9491c3f5360c78eac108",
+      "sourceName": "contracts/simple.sol",
       "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Nonces"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\cryptography\\ECDSA.sol": {
-      "lastModificationDate": 1714822108707,
-      "contentHash": "b96e0d7a3c2b185342c7d083d765b61f",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ECDSA"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\cryptography\\EIP712.sol": {
-      "lastModificationDate": 1714822108710,
-      "contentHash": "33f2efa11c674f59f4b8365be7a58da9",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
-      "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -563,23 +216,258 @@
         }
       },
       "imports": [
-        "./MessageHashUtils.sol",
-        "../ShortStrings.sol",
-        "../../interfaces/IERC5267.sol"
+        "./ERC20.sol",
+        "./ERC20Burnable.sol",
+        "./AccessControl.sol",
+        "./ERC20Permit.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "EIP712"
+        "SimpleCustomToken"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Permit.sol": {
-      "lastModificationDate": 1714822109040,
-      "contentHash": "da291753fa4641f2c5837bfc4aa4c01b",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ERC20.sol": {
+      "lastModificationDate": 1715007985617,
+      "contentHash": "4db30c594736b2134024bca3000f491a",
+      "sourceName": "contracts/ERC20.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./IERC20Metadata.sol",
+        "./Context.sol",
+        "./draft-IERC6093.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ERC20Burnable.sol": {
+      "lastModificationDate": 1715007985618,
+      "contentHash": "6e24171d29ad012b694ac9b3f39d0590",
+      "sourceName": "contracts/ERC20Burnable.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ERC20.sol",
+        "./Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Burnable"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ERC20Permit.sol": {
+      "lastModificationDate": 1715007985620,
+      "contentHash": "0eb625a16d140ffb7cbace6b2f3ec053",
+      "sourceName": "contracts/ERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20Permit.sol",
+        "./ERC20.sol",
+        "./ECDSA.sol",
+        "./EIP712.sol",
+        "./Nonces.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20Permit"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IERC20.sol": {
+      "lastModificationDate": 1715007985627,
+      "contentHash": "5517c8678c18eb1a8ba58810e7ca39ca",
+      "sourceName": "contracts/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IERC20Metadata.sol": {
+      "lastModificationDate": 1715007985628,
+      "contentHash": "ef2aa3e6b29c2596535766248a02e33d",
+      "sourceName": "contracts/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\draft-IERC6093.sol": {
+      "lastModificationDate": 1715007985608,
+      "contentHash": "4aefc698f77ecbace7f401257dfe182d",
+      "sourceName": "contracts/draft-IERC6093.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1155Errors",
+        "IERC20Errors",
+        "IERC721Errors"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IERC20Permit.sol": {
+      "lastModificationDate": 1715007985631,
+      "contentHash": "da291753fa4641f2c5837bfc4aa4c01b",
+      "sourceName": "contracts/IERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -610,12 +498,162 @@
         "IERC20Permit"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\ShortStrings.sol": {
-      "lastModificationDate": 1714822109448,
-      "contentHash": "1b71929454f558e486d1f4f2471f29d4",
-      "sourceName": "@openzeppelin/contracts/utils/ShortStrings.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ECDSA.sol": {
+      "lastModificationDate": 1715007985610,
+      "contentHash": "b96e0d7a3c2b185342c7d083d765b61f",
+      "sourceName": "contracts/ECDSA.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ECDSA"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\EIP712.sol": {
+      "lastModificationDate": 1715007985613,
+      "contentHash": "32ddf4caf562e62c4108a77647f4c272",
+      "sourceName": "contracts/EIP712.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./MessageHashUtils.sol",
+        "./ShortStrings.sol",
+        "./IERC5267.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "EIP712"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\Nonces.sol": {
+      "lastModificationDate": 1715007985636,
+      "contentHash": "c32d108058718efb9061b88e83a83f79",
+      "sourceName": "contracts/Nonces.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Nonces"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\MessageHashUtils.sol": {
+      "lastModificationDate": 1715007985634,
+      "contentHash": "b6e07c182c495298e24d876f00e7958e",
+      "sourceName": "contracts/MessageHashUtils.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Strings.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MessageHashUtils"
+      ]
+    },
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\ShortStrings.sol": {
+      "lastModificationDate": 1715007985637,
+      "contentHash": "1b71929454f558e486d1f4f2471f29d4",
+      "sourceName": "contracts/ShortStrings.sol",
+      "solcConfig": {
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -648,12 +686,12 @@
         "ShortStrings"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\interfaces\\IERC5267.sol": {
-      "lastModificationDate": 1714822109165,
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\IERC5267.sol": {
+      "lastModificationDate": 1715007985629,
       "contentHash": "94364524cb1a39dcbc3d3afff6d8e53e",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC5267.sol",
+      "sourceName": "contracts/IERC5267.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -684,12 +722,12 @@
         "IERC5267"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\cryptography\\MessageHashUtils.sol": {
-      "lastModificationDate": 1714822109386,
-      "contentHash": "9e5eec59eaffa554d6cca561dcb914eb",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\Strings.sol": {
+      "lastModificationDate": 1715007985644,
+      "contentHash": "9d36b69b37bbe30a81f4270cc0aead4c",
+      "sourceName": "contracts/Strings.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -713,21 +751,22 @@
         }
       },
       "imports": [
-        "../Strings.sol"
+        "./Math.sol",
+        "./SignedMath.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "MessageHashUtils"
+        "Strings"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\StorageSlot.sol": {
-      "lastModificationDate": 1714822109458,
-      "contentHash": "08cbccfefa284405c12b4bfa8c8c9c2b",
-      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\SignedMath.sol": {
+      "lastModificationDate": 1715007985639,
+      "contentHash": "b6c6bdc7aaca4fe5b680760a72e09d3e",
+      "sourceName": "contracts/SignedMath.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -755,54 +794,15 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "StorageSlot"
+        "SignedMath"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\Strings.sol": {
-      "lastModificationDate": 1714822109463,
-      "contentHash": "ba57ff4ddf1d9cae9d2009792795b7f6",
-      "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./math/Math.sol",
-        "./math/SignedMath.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Strings"
-      ]
-    },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\math\\Math.sol": {
-      "lastModificationDate": 1714822109377,
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\Math.sol": {
+      "lastModificationDate": 1715007985633,
       "contentHash": "718fa8ba0ff269c92e364c1429d9de57",
-      "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
+      "sourceName": "contracts/Math.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -833,12 +833,12 @@
         "Math"
       ]
     },
-    "C:\\Users\\musta\\Desktop\\ITS\\node_modules\\@openzeppelin\\contracts\\utils\\math\\SignedMath.sol": {
-      "lastModificationDate": 1714822109455,
-      "contentHash": "b6c6bdc7aaca4fe5b680760a72e09d3e",
-      "sourceName": "@openzeppelin/contracts/utils/math/SignedMath.sol",
+    "C:\\Users\\musta\\Desktop\\ITS\\contracts\\StorageSlot.sol": {
+      "lastModificationDate": 1715007985642,
+      "contentHash": "08cbccfefa284405c12b4bfa8c8c9c2b",
+      "sourceName": "contracts/StorageSlot.sol",
       "solcConfig": {
-        "version": "0.8.20",
+        "version": "0.8.25",
         "settings": {
           "optimizer": {
             "enabled": false,
@@ -866,7 +866,7 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "SignedMath"
+        "StorageSlot"
       ]
     }
   }

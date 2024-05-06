@@ -4,10 +4,10 @@ pragma solidity ^0.8.20;
 
 // Import OpenZeppelin contracts for ERC20 standard token implementations,
 // burnable tokens, access control mechanisms, and permit functionality
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "./ERC20.sol";
+import "./ERC20Burnable.sol";
+import "./AccessControl.sol";
+import "./ERC20Permit.sol";
 
 contract SimpleCustomToken is ERC20, ERC20Burnable, AccessControl, ERC20Permit {
 
