@@ -27,3 +27,6 @@ module.exports = {
     },
   },
 };
+
+// Add all chains to the hardhat.config.js file
+// Make two files or single file how ever hardhat sdeos it sow its easy for me to deploy on testnet and mainnet
