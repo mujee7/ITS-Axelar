@@ -91,7 +91,9 @@ async function deployTokenManager() {
   const params = ethers.utils.defaultAbiCoder.encode(
     ["bytes", "address"],
     [signer.address, tokenAddress]
+
   );
+  //ok
 
   // Deploy the token manager
   const deployTxData = await interchainTokenServiceContract.deployTokenManager(
