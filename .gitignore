@@ -8,6 +8,8 @@ node_modules/
 ./output
 
 package-lock.json
+.package-lock.json
+./package-lock.json
 
 cache/
 artifacts/
