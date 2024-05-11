@@ -9,8 +9,7 @@ Before running the scripts, ensure you have the following installed:
 
 - Node.js
 - npm (Node Package Manager)
-- Hardhat (Ethereum development environment)
-- Axelar Network's SDK
+- Git Bash
 
 ## Installation
 
@@ -26,31 +25,20 @@ git clone https://github.com/mujee7/ITS-Axelar.git
 npm install
 ```
 
+For MAC users also run 
+```
+npm i -g solc
+```
+
+For Testing I am giving away my .env data including private key which has ether on both chains for testing purposes.
+
+NOTE: Only For Custom
 3. Set up your environment variables:
    - Rename the `.env.example` file to `.env`.
-   - Modify the `FUNCTION_NAME` variable in the `.env` file to specify which function you want to run.
-   - Update other environment-specific variables as needed.
+   - Modify the `PRIVATE_KEY` variable in the `.env` file to your own private key.
+   - Modify the `CONSTRUCTOR_ARG_1` and `CONSTRUCTOR_ARG_2` variables in the `.env` file to your own required Constructor Arguments.
 
-## Usage
-
-To execute a specific function, run the following command:
-
-```
-npx hardhat run customInterchainToken.js --network yourChainName
-
-
-```
-
-Replace `yourScript.js` with the script you want to run (e.g., `customInterchainToken.js`) and `yourNetwork` with the desired network (e.g., `ethereum` or `base`).
-
-Right now there are only two networks I have added. If you want to add more you can follow the same sequence in hardhat.config.js file
-
-
-npx hardhat run customInterchainToken.js --network ethereum
-
-## Functionality
-
-On every step you have to change FUNCTION_NAME in .env file before running the command.
+## Compile Contract
 
 First of all run this command in cmd. Remember in cmd new terminal.
 
@@ -62,37 +50,52 @@ solcjs --base-path ./contracts --bin ./contracts/simple.sol -o ./output
 This command will compile the code and create bytecode of the smart contract
 
 
+## Details
+
+now all commands should be on bash terminal
+
+
 ### 1. `getSalt`
 
-This function will create a random salt for the deployments ahead. You need to copy this value and change it in the customInterchainToken.js file variable "salt".
+This function will create a random salt for the deployments ahead. You need to copy this value and change it in the future commands.
+
+
+```bash
+FUNCTION_NAME=getSalt npx hardhat run customInterchainToken.js
+```
 
 This salt value is very important for all the functions ahead so copy it properly and also save it somewhere secure and easy to remember.
 
-
-### 2. `deploysToken`
+### 2. `deployToken`
 
 This funtion will be used to deploy your smart contract on the same address on different blockchains.
+Change the <salt> value with the salt value from the previous command.
 
-Before running this command you need to change the constructorArgs array values in deploysToken function in customInterchainToken.js file.
-If you are using the already there contract only chnage constructorArgs values with your own wallet address whose private key you have added in .env
+The following command will deploy the token on sepolia ethereum blockchain.
 
-For custom token you have to change it accordingly.
-
-now run the command 
-
+```bash
+FUNCTION_NAME=deployToken SALT=<salt> npx hardhat run customInterchainToken.js --network ethereum_sepolia
 ```
-npx hardhat run customInterchainToken.js --network yourNetwork
-```
-here yourNetwork should be the name of the network you want to deploy on and it should be added in the config file. If it is not there add your network the same way as those two are there ethereum and base. Here both are testnet links. So it deploys on testnets at the moment.
 
-If you have to deploy on 15 different evm chains. You have to add those 15 chains data in config file. and run the same command 15 times with each time with a different network.
+after this run the following command
+The following command will deploy the token on sepolia base blockchain.
+
+```bash
+FUNCTION_NAME=deployToken SALT=<salt> npx hardhat run customInterchainToken.js --network base_sepolia
+```
+
+NOTE: For custom token you have to change constructor args, network and .env accordingly.
+
+here network should be the name of the network you want to deploy. Here both are testnet links. So it deploys on testnets at the moment.
+
+If you have to deploy on 15 different evm chains. You have to run the above commands 15 times with just different network names.
 
 Requirement:
-You need to have enough coin to pay for gas of token deployment.
+You need to have enough coin on every chain to pay for gas of token deployment.
 
 Now The tokens is deployed on different chains with same address. We can move further.
 
-copy the token address from terminal for next step.
+copy the arguments, token address, and transaction hah from terminal for next steps and contract verification. Keep them sae somewhere for future use.
 
 
 
@@ -101,53 +104,100 @@ copy the token address from terminal for next step.
 This function deploys a token manager on the specified chain. It  encodes parameters, and deploys the token manager contract.
 This will deploy token Manager on the specified blockchain.
 
-Before calling this function change tokenAddress value in customInterchainToken.js file with your token address.
+Chnage the <salt> value and <token_address> value with the token address from the previous commands.
+
+```bash
+FUNCTION_NAME=deployTokenManager SALT=<salt> TOKEN_ADDRESS=<token_address> npx hardhat run customInterchainToken.js --network ethereum_sepolia
 
 ```
-npx hardhat run customInterchainToken.js --network ethereum
-```
+
+It will retun some data copy all of it and store it somewhere safe for future use. including Transaction Hash, Token ID, token manager address.
+
 
 ### 4. `deployRemoteTokenManager`
 
-Deploys a token manager remotely on another chain. It calculates gas fees, encodes parameters, and deploys the token manager contract on the target chain.
+Deploys a token manager remotely on another chain. It calculates gas fees, encodes parameters, and deploys the token manager contract on the destination chain. 
 
-Before calling this function you need to change the remoteChain value inside this function deployRemoteTokenManager. You can get you desired chain value from this link https://docs.axelar.dev/dev/reference/testnet-chain-names (CHAIN IDENTIFIER	value)
+Chnage the <salt> value and <token_address> value with the token address from the previous commands.
 
-For this command you dont have to change the chain name but it should have the same chain name on which you have money on. Like you can now deploy token manager from ethereum blockchain on any chain by paying gas in ethereum.
+```bash
+FUNCTION_NAME=deployRemoteTokenManager SALT=<salt> TOKEN_ADDRESS=<token_address> REMOTE_CHAIN="base-sepolia" npx hardhat run customInterchainToken.js --network ethereum_sepolia
 ```
-npx hardhat run customInterchainToken.js --network ethereum
-```
-Now you have to repeat this step for all your blockchains
 
-Dont Forget to copy and save the token ID for future use.
+This process will take 15 minutes.
+It will return transaction hash you can check the progress on https://testnet.axelarscan.io/ by searching for transaction hash.
+
+
+Basically you will call a function on ethereum_sepolia chain and it will deploy a token manager for REMOTE_CHAIN which is in our case is base-sepolia. This function basically to pay  gas in one one native currency for any destination (remote) chain.
+
+NOTE: For Curtom deployment also update REMOTE_CHAIN value for your desired destination chain. You can get the value from here:
+https://docs.axelar.dev/dev/reference/testnet-chain-names (CHAIN IDENTIFIER	value)
+
+
+
+It will retun some data copy all of it and store it somewhere safe for future use. including Transaction Hash, Token ID, token manager address.
+
 
 
 ### 5. `transferMintAccessToTokenManager`
 
-Transfers mint access to the token manager on the chain. Grants the minter role to the specified token manager address.
+Transfers mint access to the token manager on the chain. Grants the minter role to the specified token manager address. So that token manager can mint and burn tokens.
 
-Before calling you have to change the tokenManagerAddress with your token manager address inside this function transferMintAccessToTokenManager
+Chnage the <manager_address> value with manager address and <token_address> value with the token address from the previous commands.
 
-Now you have to run this command with all the blockchains you deployed token on
+```bash
+FUNCTION_NAME=transferMintAccessToTokenManager TOKEN_ADDRESS=<token_address> TOKEN_MANAGER_ADDRESS=<manager_address> npx hardhat run customInterchainToken.js --network ethereum_sepolia
+
 ```
-npx hardhat run customInterchainToken.js --network yourChainName
+
+It will return a transaction hash if you want to see transaction on explorer. Do check it aswell on [ethereum_sepolia](https://sepolia.etherscan.io/)
+
+Now run the following command to give access on base-sepolia aswell.
+
+```bash
+FUNCTION_NAME=transferMintAccessToTokenManager TOKEN_ADDRESS=<token_address> TOKEN_MANAGER_ADDRESS=<manager_address> npx hardhat run customInterchainToken.js --network base_sepolia
+
 ```
+
 
 ### 6. `transferTokens`
 
 Transfers tokens from one chain to another. Initiates a token transfer between chains using the interchain token service contract.
 
-Before this change the tokenID and remoteChain values in the function transferTokens. tokenID will be the one you stored in the previous steps and remoteChain will be the chain to you want to receive tokens.
 
-here yourChainName will be the from chain where tokens need to be sent.
+Chnage the <token_ID> value with token ID from the previous commands and <amount> value with the token amount to transfer.
+Use amount 500 at the moment.
+
+```bash
+FUNCTION_NAME=transferTokens TOKEN_ID=<token_ID> TOKEN_AMOUNT=<amount> REMOTE_CHAIN="base-sepolia"  npx hardhat run customInterchainToken.js --network ethereum_sepolia
+
 ```
-npx hardhat run customInterchainToken.js --network yourChainName
-```
+
+NOTE: For Curtom deployment also update REMOTE_CHAIN value for your desired destination chain. You can get the value from here:
+https://docs.axelar.dev/dev/reference/testnet-chain-names (CHAIN IDENTIFIER	value)
+
+It will give you the Transfer Transaction Hash:
+
+This process will take 15 minutes.
+It will return transaction hash you can check the progress on https://testnet.axelarscan.io/ by searching for transaction hash.
+
+
+Congratulations!!
+
+The tokens have successfully transfered.
 
 
 ## Documentation
 
 Detailed documentation and usage examples can be found in the [Axelar Network developer documentation](https://docs.axelar.dev/dev/send-tokens/interchain-tokens/developer-guides/link-custom-tokens-deployed-across-multiple-chains-into-interchain-tokens).
+
+### Contract References
+https://github.com/axelarnetwork/interchain-token-service/blob/main/contracts/TokenHandler.sol
+https://github.com/axelarnetwork/interchain-token-service/blob/main/contracts/token-manager/TokenManager.sol
+https://github.com/axelarnetwork/interchain-token-service/blob/main/contracts/InterchainTokenFactory.sol
+https://github.com/axelarnetwork/axelar-gmp-sdk-solidity/blob/main/scripts/create2Deployer.js
+https://github.com/axelarnetwork/interchain-token-service/blob/9edc4318ac1c17231e65886eea72c0f55469d7e5/contracts/InterchainTokenService.sol#L276
+
 
 ## License
 
