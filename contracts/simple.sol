@@ -19,7 +19,7 @@ contract SimpleCustomToken is ERC20, ERC20Burnable, AccessControl, ERC20Permit {
         ERC20Permit("SimpleCustomToken") // Initialize ERC20Permit with the token name
     {
         // Mint an initial supply of tokens to the message sender
-        _mint(msg.sender, 10000 * 10 ** decimals());
+        _mint(defaultAdmin, 10000 * 10 ** decimals());
 
 
         // Grant the DEFAULT_ADMIN_ROLE to the specified defaultAdmin address

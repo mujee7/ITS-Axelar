@@ -1,2 +1,16 @@
 /node_modules
 ./node_modules
+
+node_modules/
+
+./cache
+./artifacts
+./output
+
+package-lock.json
+.package-lock.json
+./package-lock.json
+
+cache/
+artifacts/
+output/
