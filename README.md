@@ -60,6 +60,13 @@ This command will compile the code and create bytecode of the smart contract
 
 now all commands should be on bash terminal
 
+You can see all the transactions by copying transaction hash on the given explorers.
+If it is on ethereum sepolia use this explorer
+Explorer: https://sepolia.etherscan.io/
+
+if base sepolia then use this explorer
+Explorer: https://sepolia.basescan.org/
+
 
 ### 1. `getSalt`
 
@@ -75,7 +82,7 @@ This salt value is very important for all the functions ahead so copy it properl
 ### 2. `deployToken`
 
 This funtion will be used to deploy your smart contract on the same address on different blockchains.
-Change the <salt> value with the salt value from the previous command.
+
 
 The following command will deploy the token on sepolia ethereum blockchain.
 
@@ -86,7 +93,7 @@ FUNCTION_NAME=deployToken npx hardhat run customInterchainToken.js --network eth
 after this run the following command
 The following command will deploy the token on sepolia base blockchain.
 
-Explore: https://sepolia.etherscan.io/
+Explorer: https://sepolia.etherscan.io/
 
 ```bash
 FUNCTION_NAME=deployToken npx hardhat run customInterchainToken.js --network base_sepolia
@@ -105,7 +112,7 @@ You need to have enough coin on every chain to pay for gas of token deployment.
 
 Now The tokens is deployed on different chains with same address. We can move further.
 
-copy the arguments, token address, and transaction hah from terminal for next steps and contract verification. Keep them save somewhere for future use.
+IMPORTANT: Copy the arguments from terminal contract verification. Keep them save somewhere for future use.
 
 
 ### 3. `mintTokens`
@@ -121,21 +128,18 @@ FUNCTION_NAME=mintTokens SUPPLY=500 npx hardhat run customInterchainToken.js --n
 This function deploys a token manager on the specified chain. It  encodes parameters, and deploys the token manager contract.
 This will deploy token Manager on the specified blockchain.
 
-Chnage the <salt> value and <token_address> value with the token address from the previous commands.
 
 ```bash
 FUNCTION_NAME=deployTokenManager npx hardhat run customInterchainToken.js --network ethereum_sepolia
 
 ```
 
-It will retun some data copy all of it and store it somewhere safe for future use. including Transaction Hash, Token ID, token manager address.
 
 
 ### 5. `deployRemoteTokenManager`
 
 Deploys a token manager remotely on another chain. It calculates gas fees, encodes parameters, and deploys the token manager contract on the destination chain. 
 
-Chnage the <salt> value and <token_address> value with the token address from the previous commands.
 
 ```bash
 FUNCTION_NAME=deployRemoteTokenManager  REMOTE_CHAIN="base-sepolia" npx hardhat run customInterchainToken.js --network ethereum_sepolia
@@ -160,8 +164,6 @@ It will retun some data copy all of it and store it somewhere safe for future us
 
 Transfers mint access to the token manager on the chain. Grants the minter role to the specified token manager address. So that token manager can mint and burn tokens.
 
-Chnage the <manager_address> value with manager address and <token_address> value with the token address from the previous commands.
-
 ```bash
 FUNCTION_NAME=transferMintAccessToTokenManager npx hardhat run customInterchainToken.js --network ethereum_sepolia
 
@@ -182,8 +184,7 @@ FUNCTION_NAME=transferMintAccessToTokenManager npx hardhat run customInterchainT
 Transfers tokens from one chain to another. Initiates a token transfer between chains using the interchain token service contract.
 
 
-Chnage the <token_ID> value with token ID from the previous commands and <amount> value with the token amount to transfer.
-Use amount 500 at the moment.
+Chnage the <TOKEN_AMOUNT> value with the token amount to transfer.
 
 ```bash
 FUNCTION_NAME=transferTokens TOKEN_AMOUNT=20 REMOTE_CHAIN="base-sepolia"  npx hardhat run customInterchainToken.js --network ethereum_sepolia
