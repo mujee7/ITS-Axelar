@@ -14,14 +14,10 @@ contract SimpleCustomToken is ERC20, ERC20Burnable, AccessControl, ERC20Permit {
 // Define a constant for the minter role using keccak256 to generate a unique hash
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor(address defaultAdmin, address minter)
-        ERC20("SimpleCustomToken", "SCT") // Set token name and symbol
-        ERC20Permit("SimpleCustomToken") // Initialize ERC20Permit with the token name
+    constructor(string memory _name, string memory _symbol, address defaultAdmin, address minter)
+        ERC20(_name, _symbol) // Set token name and symbol
+        ERC20Permit(_name) // Initialize ERC20Permit with the token name
     {
-        // Mint an initial supply of tokens to the message sender
-        _mint(defaultAdmin, 10000 * 10 ** decimals());
-
-
         // Grant the DEFAULT_ADMIN_ROLE to the specified defaultAdmin address
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
 
