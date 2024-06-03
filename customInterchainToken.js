@@ -1,8 +1,10 @@
 const hre = require("hardhat");
 const crypto = require("crypto");
-
-const ethers = hre.ethers;
 const fs = require('fs');
+const path = require('path');
+const ethers = hre.ethers;
+const dotenv = require('dotenv');
+
 const {
   AxelarQueryAPI,
   Environment,
@@ -13,8 +15,14 @@ const {
 // Axelar's API
 const api = new AxelarQueryAPI({ environment: Environment.TESTNET });
 
+// Path to the .env file
+const envPath = path.resolve(__dirname, '.env');
+
+// Load existing .env variables
+const envConfig = dotenv.parse(fs.readFileSync(envPath));
+
 //ABIs
-const interchainTokenServiceContractABI = require("./abis/interchainTokenServiceABI");
+const ITS_CONTRACT_ABI = require("./abis/interchainTokenServiceABI");
 const customTokenABI = require("./abis/customTokenABI");
 const tokenDeployerABI = require("./abis/tokenDeployer")
 const tokenByteCodeFile = fs.readFileSync("./output/simple_sol_SimpleCustomToken.bin");
@@ -23,11 +31,11 @@ const tokenByteCodeFile = fs.readFileSync("./output/simple_sol_SimpleCustomToken
 const MINT_BURN = 4;
 
 // Axelar's ITS contract address
-const interchainTokenServiceContractAddress =
+const ITS_CONTRACT_ADDRESS =
   "0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C";
 
 //Same address contract deployer address
-const tokenDeployerAddress =
+const TOKEN_DEPLOYER_ADDRESS =
   "0x98B2920D53612483F91F12Ed7754E51b4A77919e";
 
 // Returns signer
@@ -44,7 +52,15 @@ async function getContractInstance(contractAddress, contractABI, signer) {
 // Prints new salt value
 function getSalt(){
   const salt = "0x" + crypto.randomBytes(32).toString("hex");
-  console.log(salt)
+  
+  //updates env
+  envConfig.SALT = salt;
+  const updatedEnvConfig = Object.keys(envConfig)
+  .map(key => `${key}=${envConfig[key]}`)
+  .join('\n');
+  fs.writeFileSync(envPath, updatedEnvConfig, 'utf8');
+
+  console.log("Generated Salt: ",salt)
 }
 
 // It deploys contract on same address on different blockchains with same salt value
@@ -52,30 +68,64 @@ async function deployToken(salt) {
   // Get a signer to sign the transaction
   const signer = await getSigner();  
   //Constructor values of our smart contract [defaultAdmin, minter]
-  const constructorArgs = [process.env.CONSTRUCTOR_ARG_1, process.env.CONSTRUCTOR_ARG_2];
+  const constructorArgs = [process.env.TOKEN_NAME, process.env.TOKEN_SYMBOL, process.env.TOKEN_DEFAULT_ADMIN, process.env.TOKEN_MINTER];
 
   // Encode constructor arguments
   const encodedArgs = ethers.utils.defaultAbiCoder.encode(
-    ["address", "address"], //change these accroding to your contract
+    ["string","string","address", "address"], //change these accroding to your contract
     constructorArgs
   );
 
-  console.log("arguments: ", encodedArgs) // Important to copy these for contract verification in future.
+  //Don't forget to remove 0x while verifying the contract.
+  console.log("arguments: ", encodedArgs, "\n Don't forget to remove 0x while verifying the contract.") // Important to copy these for contract verification in future.
 
 
   const deployerContract = await getContractInstance(
-    tokenDeployerAddress,
+    TOKEN_DEPLOYER_ADDRESS,
     tokenDeployerABI,
     signer
   );
+  
   // Contract byteCode with constructor arguments
   const tokenByteCode = "0x" + tokenByteCodeFile.toString() + encodedArgs.slice(2); 
   // Prints pre determined token address
-  console.log("Token Address before deployment: ",await deployerContract.deployedAddress(tokenByteCode, signer.address, salt));
+  const tokenAddress = await deployerContract.deployedAddress(tokenByteCode, signer.address, salt)
+
+  //updates env
+  envConfig.TOKEN_ADDRESS = tokenAddress
+  const updatedEnvConfig = Object.keys(envConfig)
+  .map(key => `${key}=${envConfig[key]}`)
+  .join('\n');
+  fs.writeFileSync(envPath, updatedEnvConfig, 'utf8');
+
+  console.log("Token Address before deployment: ", tokenAddress);
   // Deploys token
   tx= await deployerContract.deploy(tokenByteCode, salt)
   // Prints Transaction hash
   console.log("Transaction Hash: ",tx.hash)
+}
+
+
+
+async function mintTokens(tokenAddress, amount) {
+  // Get a signer to sign the transaction
+  const signer = await getSigner();
+
+  // Gets Our Token Contract instance
+  const tokenContract = await getContractInstance(
+    tokenAddress,
+    customTokenABI,
+    signer
+  );  
+
+  // Grants minter role
+  const transaction = await tokenContract.mint(
+    signer.address,
+    Number(amount * 10 ** 18).toString()  
+  );
+  
+  //Prints the transaction hash.
+  console.log("Mint TX hash: ", transaction.hash);
 }
 
 // Deploys token manager for our token 
@@ -85,8 +135,8 @@ async function deployTokenManager(salt, tokenAddress) {
 
   // Get the InterchainTokenService contract instance
   const interchainTokenServiceContract = await getContractInstance(
-    interchainTokenServiceContractAddress,
-    interchainTokenServiceContractABI,
+    ITS_CONTRACT_ADDRESS,
+    ITS_CONTRACT_ABI,
     signer
   );
 
@@ -114,6 +164,16 @@ async function deployTokenManager(salt, tokenAddress) {
   // Get the token manager address before its deployement
   const expectedTokenManagerAddress =
     await interchainTokenServiceContract.tokenManagerAddress(tokenId);
+
+
+  //updates env
+  envConfig.TOKEN_MANAGER_ADDRESS = expectedTokenManagerAddress;
+  envConfig.TOKEN_ID = tokenId;
+
+  const updatedEnvConfig = Object.keys(envConfig)
+  .map(key => `${key}=${envConfig[key]}`)
+  .join('\n');
+  fs.writeFileSync(envPath, updatedEnvConfig, 'utf8');
 
   console.log(
     `
@@ -148,8 +208,8 @@ async function deployRemoteTokenManager(salt, tokenAddress, remoteChain) {
 
   // Gets the InterchainTokenService contract instance
   const interchainTokenServiceContract = await getContractInstance(
-    interchainTokenServiceContractAddress,
-    interchainTokenServiceContractABI,
+    ITS_CONTRACT_ADDRESS,
+    ITS_CONTRACT_ABI,
     signer
   );
 
@@ -217,6 +277,8 @@ async function transferMintAccessToTokenManager(tokenAddress, tokenManagerAddres
   console.log("grantRoleTxn: ", grantRoleTxn.hash);
 }
 
+
+
 // Transfer tokens : Sourch Chain -> Destination Chain
 async function transferTokens(tokenID, remoteChain, amount) {
   // Get a signer to sign the transaction
@@ -224,8 +286,8 @@ async function transferTokens(tokenID, remoteChain, amount) {
 
   // Gets the InterchainTokenService contract instance
   const interchainTokenServiceContract = await getContractInstance(
-    interchainTokenServiceContractAddress,
-    interchainTokenServiceContractABI,
+    ITS_CONTRACT_ADDRESS,
+    ITS_CONTRACT_ABI,
     signer
   );
 
@@ -260,6 +322,7 @@ async function main() {
   const tokenManagerAddress = process.env.TOKEN_MANAGER_ADDRESS   // Generated Token Manager address
   const tokenID = process.env.TOKEN_ID             // Generated TokenID 
   const tokenAmount = process.env.TOKEN_AMOUNT     // Amount of tokens to transfer.
+  const tokenSupply = process.env.SUPPLY           // ToKen Supply
 
   switch (functionName) {
     case "getSalt":
@@ -267,6 +330,9 @@ async function main() {
       break;
     case "deployToken":
       await deployToken(SALT);
+      break;
+    case "mintTokens":
+      await mintTokens(tokenAddress, tokenSupply);
       break;
     case "deployTokenManager":
       await deployTokenManager(SALT, tokenAddress);
